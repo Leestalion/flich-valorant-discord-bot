@@ -164,3 +164,4 @@ cython_debug/
 
 scores.json
 weekly_challenges.json
+pending_proofs.json
