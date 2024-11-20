@@ -6,62 +6,57 @@ import random
 from datetime import datetime
 from dotenv import load_dotenv
 
-def main():
-    # Charger l'environnement depuis le fichier .env
-    load_dotenv()
-
-    # Charger et sauvegarder les scores
-    def load_scores():
-        """
-        Load the scores from the 'scores.json' file.
-        If the file does not exist, return an empty dictionary.
-        """
+# Charger et sauvegarder les scores
+def load_scores():
+    """
+    Load the scores from the 'scores.json' file.
+    If the file does not exist, return an empty dictionary.
+    """
     try:
         with open('scores.json', 'r') as file:
             return json.load(file)
     except FileNotFoundError:
         return {}
-    def load_weekly_challenges():
-        """
-        Load the weekly challenges from the 'weekly_challenges.json' file.
-        If the file does not exist, return an empty list.
-        """
-        try:
-            with open('weekly_challenges.json', 'r') as file:
-                return json.load(file)
-        except FileNotFoundError:
-            return []
+    
+def save_scores(scores):
+    with open('scores.json', 'w') as file:
+        json.dump(scores, file, indent=4)
 
-    def save_scores(scores):
-        with open('scores.json', 'w') as file:
-            json.dump(scores, file, indent=4)
+def load_weekly_challenges():
+    """
+    Load the weekly challenges from the 'weekly_challenges.json' file.
+    If the file does not exist, return an empty list.
+    """
+    try:
+        with open('weekly_challenges.json', 'r') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return []
 
-    def save_weekly_challenges(challenges):
-        with open('weekly_challenges.json', 'w') as file:
-            json.dump(challenges, file, indent=4)
+def save_weekly_challenges(challenges):
+    with open('weekly_challenges.json', 'w') as file:
+        json.dump(challenges, file, indent=4)
 
-    # Charger les preuves en attente
-    def load_pending_proofs():
-        """
-        Load the pending proofs from the 'pending_proofs.json' file.
-        If the file does not exist, return an empty list.
-        """
+# Charger les preuves en attente
+def load_pending_proofs():
+    """
+    Load the pending proofs from the 'pending_proofs.json' file.
+    If the file does not exist, return an empty list.
+    """
     try:
         with open('pending_proofs.json', 'r') as file:
             return json.load(file)
     except FileNotFoundError:
         return []
 
-    def save_pending_proofs(proofs):
-        with open('pending_proofs.json', 'w') as file:
-            json.dump(proofs, file, indent=4)
+def save_pending_proofs(proofs):
+    with open('pending_proofs.json', 'w') as file:
+        json.dump(proofs, file, indent=4)
 
-    # Charger les données au démarrage
-    scores = load_scores()
-    weekly_challenges = load_weekly_challenges()
-    pending_proofs = load_pending_proofs()
-
-    # Liste des défis
+# Fonction principale
+def main(): 
+    
+    # créer la liste des défis initiaux
     challenges = [
         "Gagner une partie avec 25 kills minimum sur 3 parties différentes.",
         "Gagner une partie avec au moins 35 kills sur une seule map.",
@@ -72,60 +67,76 @@ def main():
         "Réaliser au total 150 kills dans l'historique de partie.",
         "Gagner une partie avec 30 kills minimum.",
         "Gagner une partie avec un K/D supérieur à 3 dans 3 parties différentes.",
-        "Gagner une partie avec un K/D supérieur à 4 sur une map spécifique (par exemple, Haven).",
-        "Gagner une partie avec un K/D de moins de 1.",
-        "Gagner 5 parties avec un K/D supérieur à 2.",
-        "Réussir 2 games consécutives avec un K/D supérieur à 2.0.",
-        "Gagner une partie avec un pourcentage de headshot supérieur à 40%.",
-        "Gagner une partie en réalisant au moins 50 pourcents de headshots dans une manche.",
-        "Gagner une partie en réalisant 15 assists minimum.",
-        "Réaliser au moins 80 assists dans l'historique de partie.",
-        "Réussir 5 assists en une seule manche et gagner la partie.",
-        "Avoir 15 assists ou plus sur 3 parties gagnées différentes.",
-        "Gagner une partie en ayant le plus grand nombre d'assists parmi les deux équipes.",
-        "Gagner une partie avec un écart de 10 rounds ou plus.",
-        "Gagner une partie avec un score exact de 13-11.",
-        "Gagner une partie avec 0 rounds perdus en attaque.",
-        "Gagner une partie en étant mené 9-3, puis remonter pour gagner.",
-        "Gagner une partie avec 6 manches consécutives sans perdre un round.",
-        "Gagner 2 parties consécutives avec au moins 10 rounds d'écart.",
-        "Gagner une partie sur chaque map au moins une fois.",
-        "Gagner une partie avec 4 agents dans l'historique.",
-        "Gagner une partie en jouant un agent Initiateur avec au moins 10 assists.",
-        "Gagner une partie en jouant un agent Dueliste avec 20 kills.",
-        "Gagner une partie avec Sage en réalisant au moins 3 résurrections.",
-        "Gagner une partie avec Killjoy en obtenant au moins 2 kills grâce à ses molly.",
-        "Gagner une partie avec Raze et réaliser un double kill avec son ultime.",
-        "Gagner une partie avec Brimstone et obtenir au moins 2 kills avec ses grenades incendiaires.",
-        "Gagner une partie avec Sova en réalisant au moins 5 kills à travers des murs.",
-        "Gagner une partie avec Jett en réalisant au moins 5 kills avec son ultime.",
-        "Gagner une partie avec Cypher en réalisant au moins 5 kills à travers des smokes.",
-        "Gagner une partie où chaque membre de l'équipe réalise au moins 10 kills.",
-        "Gagner une partie où l'équipe entière ne perd aucun round en défense.",
-        "Gagner une partie avec au moins 2 kills par round sur 5 rounds consécutifs.",
-        "Gagner 3 parties consécutives.",
-        "Gagner 5 parties consécutives.",
-        "Gagner 7 parties consécutives.",
-        "Gagner un partie en faisant un ACE.",
-        "Gagner une partie où vous réalisez 2 clutch consécutifs.",
-        "Gagner une partie après avoir perdu tous les pistol rounds.",
-        "Gagner une partie en ayant participé à 50 pourcents des kills ou assists de l’équipe.",
     ]
+    
+        # "Gagner une partie avec un K/D supérieur à 4 sur une map spécifique (par exemple, Haven).",
+        # "Gagner une partie avec un K/D de moins de 1.",
+        # "Gagner 5 parties avec un K/D supérieur à 2.",
+        # "Réussir 2 games consécutives avec un K/D supérieur à 2.0.",
+        # "Gagner une partie avec un pourcentage de headshot supérieur à 40%.",
+        # "Gagner une partie en réalisant au moins 50 pourcents de headshots dans une manche.",
+        # "Gagner une partie en réalisant 15 assists minimum.",
+        # "Réaliser au moins 80 assists dans l'historique de partie.",
+        # "Réussir 5 assists en une seule manche et gagner la partie.",
+        # "Avoir 15 assists ou plus sur 3 parties gagnées différentes.",
+        # "Gagner une partie en ayant le plus grand nombre d'assists parmi les deux équipes.",
+        # "Gagner une partie avec un écart de 10 rounds ou plus.",
+        # "Gagner une partie avec un score exact de 13-11.",
+        # "Gagner une partie avec 0 rounds perdus en attaque.",
+        # "Gagner une partie en étant mené 9-3, puis remonter pour gagner.",
+        # "Gagner une partie avec 6 manches consécutives sans perdre un round.",
+        # "Gagner 2 parties consécutives avec au moins 10 rounds d'écart.",
+        # "Gagner une partie sur chaque map au moins une fois.",
+        # "Gagner une partie avec 4 agents dans l'historique.",
+        # "Gagner une partie en jouant un agent Initiateur avec au moins 10 assists.",
+        # "Gagner une partie en jouant un agent Dueliste avec 20 kills.",
+        # "Gagner une partie avec Sage en réalisant au moins 3 résurrections.",
+        # "Gagner une partie avec Killjoy en obtenant au moins 2 kills grâce à ses molly.",
+        # "Gagner une partie avec Raze et réaliser un double kill avec son ultime.",
+        # "Gagner une partie avec Brimstone et obtenir au moins 2 kills avec ses grenades incendiaires.",
+        # "Gagner une partie avec Sova en réalisant au moins 5 kills à travers des murs.",
+        # "Gagner une partie avec Jett en réalisant au moins 5 kills avec son ultime.",
+        # "Gagner une partie avec Cypher en réalisant au moins 5 kills à travers des smokes.",
+        # "Gagner une partie où chaque membre de l'équipe réalise au moins 10 kills.",
+        # "Gagner une partie où l'équipe entière ne perd aucun round en défense.",
+        # "Gagner une partie avec au moins 2 kills par round sur 5 rounds consécutifs.",
+        # "Gagner 3 parties consécutives.",
+        # "Gagner 5 parties consécutives.",
+        # "Gagner 7 parties consécutives.",
+        # "Gagner un partie en faisant un ACE.",
+        # "Gagner une partie où vous réalisez 2 clutch consécutifs.",
+        # "Gagner une partie après avoir perdu tous les pistol rounds.",
+        # "Gagner une partie en ayant participé à 50 pourcents des kills ou assists de l’équipe.",
 
+    save_weekly_challenges(challenges)
+            
+    # Charger l'environnement depuis le fichier .env
+    load_dotenv()
+    
+    # Charger les données au démarrage
+    scores = load_scores()
+    weekly_challenges = load_weekly_challenges()
+    pending_proofs = load_pending_proofs()
+    
     # Initialisation du bot
     intents = discord.Intents.default()
     intents.message_content = True
     client = discord.Client(intents=intents)
-
+    
     async def trouver_ou_creer_channels():
         """
         Find or create the necessary channels in each guild.
         """
-    async def on_ready():
-        print(f"Le bot est maintenant connecté : {client.user.name} (ID: {client.user.id})")
-        await trouver_ou_creer_channels()
-
-    # Chercher ou créer les canaux nécessaires
+        for guild in client.guilds:
+            for channel_name in ["apobjectif", "preuve"]:
+                channel = discord.utils.get(guild.text_channels, name=channel_name)
+                if not channel:
+                    await guild.create_text_channel(channel_name)
+                    print(f"✅ Canal '{channel_name}' créé dans : {guild.name}")
+                else:
+                    print(f"✅ Canal '{channel_name}' trouvé dans : {guild.name}")
+    
+        # Chercher ou créer les canaux nécessaires
     async def trouver_ou_creer_channels():
         for guild in client.guilds:
             for channel_name in ["apobjectif", "preuve"]:
@@ -135,6 +146,11 @@ def main():
                     print(f"✅ Canal '{channel_name}' créé dans : {guild.name}")
                 else:
                     print(f"✅ Canal '{channel_name}' trouvé dans : {guild.name}")
+
+    @client.event
+    async def on_ready():
+        print(f"Le bot est maintenant connecté : {client.user.name} (ID: {client.user.id})")
+        await trouver_ou_creer_channels()
 
     @client.event
     async def on_message(message):
@@ -308,7 +324,7 @@ def main():
                 "`!aide` : Affiche cette liste de commandes.\n"
             )
             await message.channel.send(response)
-
+    
     client.run(os.getenv('DISCORD_TOKEN'))
 
 if __name__ == '__main__':
