@@ -1,0 +1,11 @@
+# fly.toml app configuration file generated for flich-valorant-discord-bot on 2024-11-20T17:40:16+01:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'flich-valorant-discord-bot'
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[env]

@@ -5,13 +5,13 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy the requirements file into the container
-COPY requirements.txt requirements.txt
+COPY requirements.txt /app/
 
 # Install the dependencies
 RUN pip install -r requirements.txt
 
 # Copy the rest of the application code into the container
-COPY . .
+COPY . /app
 
 # Command to run the application
-CMD ["python", "main.py"]
+CMD python main.py
