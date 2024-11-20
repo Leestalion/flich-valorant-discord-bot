@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 import os
 
 def main():
-    # Load environment variables from .env file
+    # Charger l'environnement depuis le fichier .env
     load_dotenv()
 
     # Charger et sauvegarder les scores
