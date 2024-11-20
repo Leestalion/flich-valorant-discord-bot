@@ -2,7 +2,13 @@ import discord
 import random
 import json
 import asyncio
-from datetime import datetime, timedelta
+from datetime import datetime
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+discord_token = os.getenv('DISCORD_TOKEN')
 
 # Charger et sauvegarder les scores
 def load_scores():
@@ -117,10 +123,6 @@ async def trouver_ou_creer_channels():
             else:
                 print(f"✅ Canal '{channel_name}' trouvé dans : {guild.name}")
 
-# Vérification des permissions pour les modérateurs
-def is_moderator(member):
-    return any(role.name.lower() == "mod" for role in member.roles)
-
 @client.event
 async def on_message(message):
     # Ignorer les messages du bot lui-même
@@ -143,74 +145,6 @@ async def on_message(message):
         else:
             await message.channel.send("Aucun défi hebdomadaire n'est actuellement défini.")
 
-    # Commande : preuve
-    elif message.content.startswith("!preuve"):
-        try:
-            _, defi_num, lien = message.content.split(maxsplit=2)
-            defi_num = int(defi_num)
-
-            if defi_num <= 0 or defi_num > len(weekly_challenges):
-                await message.channel.send("❌ Numéro de défi invalide. Assurez-vous qu'il correspond à un défi actuel.")
-                return
-
-            pending_proofs.append({
-                "utilisateur": str(message.author.id),
-                "defi": defi_num,
-                "lien": lien
-            })
-            save_pending_proofs(pending_proofs)
-            await message.channel.send("✅ Preuve envoyée avec succès et en attente de validation.")
-
-            proof_channel = discord.utils.get(client.get_all_channels(), name="preuve")
-            if proof_channel:
-                await proof_channel.send(
-                    f"🔔 **Nouvelle preuve soumise !**\n"
-                    f"- Utilisateur : <@{message.author.id}>\n"
-                    f"- Défi : {weekly_challenges[defi_num - 1]}\n"
-                    f"- Lien : {lien}\n"
-                    "Les modérateurs peuvent valider cette preuve avec : "
-                    "`!validerdefi @utilisateur <numéro_du_défi>`."
-                )
-
-        except ValueError:
-            await message.channel.send("❌ Utilisation incorrecte. Format : `!preuve <numéro_du_défi> <lien>`")
-
-    # Commande : Valider une preuve
-    elif message.content.startswith("!validerdefi"):
-        if is_moderator(message.author):
-            try:
-                _, utilisateur_mention, defi_num = message.content.split()
-                defi_num = int(defi_num)
-                utilisateur_id = utilisateur_mention.strip("<@!>")
-
-                # Vérification si la preuve existe
-                preuve_existante = None
-                for preuve in pending_proofs:
-                    if preuve["utilisateur"] == utilisateur_id and preuve["defi"] == defi_num:
-                        preuve_existante = preuve
-                        break
-
-                if not preuve_existante:
-                    await message.channel.send("❌ Aucune preuve trouvée pour cet utilisateur et ce défi.")
-                    return
-
-                # Ajouter les points au joueur
-                if utilisateur_id not in scores:
-                    scores[utilisateur_id] = {"points": 0}
-                scores[utilisateur_id]["points"] += 10  # Points pour un défi validé
-                save_scores(scores)
-
-                # Supprimer la preuve validée
-                pending_proofs.remove(preuve_existante)
-                save_pending_proofs(pending_proofs)
-
-                await message.channel.send(f"✅ Défi {defi_num} validé pour <@{utilisateur_id}> !")
-
-            except ValueError:
-                await message.channel.send("❌ Utilisation : `!validerdefi @utilisateur <numéro_du_défi>`")
-        else:
-            await message.channel.send("❌ Vous n'avez pas les permissions pour utiliser cette commande.")
-
     # Commande : Afficher ses points
     elif message.content == "!stat":
         if user_id not in scores:
@@ -231,20 +165,117 @@ async def on_message(message):
         else:
             await message.channel.send("❌ Aucun joueur enregistré dans le classement.")
 
-    # Commande : Ajouter des points (réservée aux modérateurs)
+    # Commande : Ajouter des points
     elif message.content.startswith("!ajouterpoints"):
-        if is_moderator(message.author):
+        if "mod" in [role.name.lower() for role in message.author.roles]:
             try:
-                _, utilisateur_mention, points = message.content.split()
+                _, utilisateur, points = message.content.split()
                 points = int(points)
-                utilisateur_id = utilisateur_mention.strip("<@!>")
+                utilisateur_id = utilisateur.strip("<@!>")
                 if utilisateur_id not in scores:
                     scores[utilisateur_id] = {"points": 0}
                 scores[utilisateur_id]["points"] += points
                 save_scores(scores)
-                await message.channel.send(f"✅ {points} points ajoutés à <@{utilisateur_id}>.")
+                user_object = await message.guild.fetch_member(utilisateur_id)
+                await message.channel.send(f"✅ {points} points ajoutés à {user_object.mention}.")
             except ValueError:
                 await message.channel.send("❌ Utilisation : !ajouterpoints <@utilisateur> <points>")
+        else:
+            await message.channel.send("❌ Vous n'avez pas les permissions pour utiliser cette commande.")
+
+    # Commande : Enlever des points
+    elif message.content.startswith("!enleverpoints"):
+        if "mod" in [role.name.lower() for role in message.author.roles]:
+            try:
+                _, utilisateur, points = message.content.split()
+                points = int(points)
+                utilisateur_id = utilisateur.strip("<@!>")
+                if utilisateur_id not in scores:
+                    scores[utilisateur_id] = {"points": 0}
+                scores[utilisateur_id]["points"] -= points
+                if scores[utilisateur_id]["points"] < 0:
+                    scores[utilisateur_id]["points"] = 0
+                save_scores(scores)
+                user_object = await message.guild.fetch_member(utilisateur_id)
+                await message.channel.send(f"✅ {points} points enlevés à {user_object.mention}.")
+            except ValueError:
+                await message.channel.send("❌ Utilisation : !enleverpoints <@utilisateur> <points>")
+        else:
+            await message.channel.send("❌ Vous n'avez pas les permissions pour utiliser cette commande.")
+
+    # Commande : Réinitialiser les scores
+    elif message.content == "!resetscores":
+        if "mod" in [role.name.lower() for role in message.author.roles]:
+            scores.clear()
+            save_scores(scores)
+            await message.channel.send("✅ Tous les scores ont été réinitialisés.")
+        else:
+            await message.channel.send("❌ Vous n'avez pas les permissions pour utiliser cette commande.")
+
+    # Commande : Changer les défis
+    elif message.content == "!changerdefis":
+        if "mod" in [role.name.lower() for role in message.author.roles]:
+            weekly_challenges.clear()
+            weekly_challenges.extend(random.sample(challenges, 10))
+            save_weekly_challenges(weekly_challenges)
+            response = "**🎯 Nouveaux défis hebdomadaires 🎯**\n\n"
+            for i, defi in enumerate(weekly_challenges, start=1):
+                response += f"{i}. {defi}\n"
+            await message.channel.send(response)
+        else:
+            await message.channel.send("❌ Vous n'avez pas les permissions pour utiliser cette commande.")
+
+    # Commande : Soumettre une preuve
+    elif message.content.startswith("!preuve"):
+        try:
+            _, defi_num, lien = message.content.split(maxsplit=2)
+            defi_num = int(defi_num)
+            if defi_num <= 0 or defi_num > len(weekly_challenges):
+                await message.channel.send("❌ Numéro de défi invalide.")
+                return
+            pending_proofs.append({
+                "utilisateur": user_id,
+                "defi": defi_num,
+                "lien": lien
+            })
+            save_pending_proofs(pending_proofs)
+            proof_channel = discord.utils.get(client.get_all_channels(), name="preuve")
+            if proof_channel:
+                await proof_channel.send(
+                    f"🔔 **Nouvelle preuve soumise !**\n"
+                    f"- Utilisateur : {message.author.mention}\n"
+                    f"- Défi : {weekly_challenges[defi_num - 1]}\n"
+                    f"- Lien : {lien}\n"
+                    f"Les modérateurs peuvent valider cette preuve avec `!validerdefi <utilisateur> <numéro_du_défi>`."
+                )
+            await message.channel.send("✅ Preuve envoyée avec succès et en attente de validation.")
+        except ValueError:
+            await message.channel.send("❌ Utilisation : !preuve <numéro_du_défi> <lien>")
+
+    # Commande : Valider une preuve
+    elif message.content.startswith("!validerdefi"):
+        if "mod" in [role.name.lower() for role in message.author.roles]:
+            try:
+                _, utilisateur, defi_num = message.content.split()
+                defi_num = int(defi_num)
+                utilisateur_id = utilisateur.strip("<@!>")
+                matching_proof = next(
+                    (proof for proof in pending_proofs if proof["utilisateur"] == utilisateur_id and proof["defi"] == defi_num),
+                    None
+                )
+                if matching_proof:
+                    if utilisateur_id not in scores:
+                        scores[utilisateur_id] = {"points": 0}
+                    scores[utilisateur_id]["points"] += 10
+                    save_scores(scores)
+                    pending_proofs.remove(matching_proof)
+                    save_pending_proofs(pending_proofs)
+                    user_object = await message.guild.fetch_member(utilisateur_id)
+                    await message.channel.send(f"✅ Défi {defi_num} validé pour {user_object.mention} !")
+                else:
+                    await message.channel.send("❌ Aucune preuve correspondante trouvée.")
+            except ValueError:
+                await message.channel.send("❌ Utilisation : !validerdefi <utilisateur> <numéro_du_défi>")
         else:
             await message.channel.send("❌ Vous n'avez pas les permissions pour utiliser cette commande.")
 
@@ -258,8 +289,11 @@ async def on_message(message):
             "`!preuve <numéro_du_défi> <lien>` : Soumet une preuve pour un défi.\n"
             "`!validerdefi <utilisateur> <numéro_du_défi>` : Valide une preuve (modérateurs uniquement).\n"
             "`!ajouterpoints <utilisateur> <points>` : Ajoute des points à un utilisateur (modérateurs uniquement).\n"
+            "`!enleverpoints <utilisateur> <points>` : Enlève des points à un utilisateur (modérateurs uniquement).\n"
+            "`!resetscores` : Réinitialise tous les scores (modérateurs uniquement).\n"
+            "`!changerdefis` : Change les défis hebdomadaires (modérateurs uniquement).\n"
             "`!aide` : Affiche cette liste de commandes.\n"
         )
         await message.channel.send(response)
 
-client.run("test")
+client.run(discord_token)
