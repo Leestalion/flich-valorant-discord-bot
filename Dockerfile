@@ -13,5 +13,8 @@ RUN pip install -r requirements.txt
 # Copy the rest of the application code into the container
 COPY . /app
 
+# Make port 8080 available to the world outside this container
+EXPOSE 8080
+
 # Command to run the application
 CMD python main.py
