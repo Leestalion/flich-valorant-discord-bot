@@ -106,6 +106,7 @@ def main():
         "Gagner une partie après avoir perdu tous les pistol rounds.",
         "Gagner une partie en ayant participé à 50% des kills ou assists de l’équipe.",
     ]
+
     
     weekly_challenges = random.sample(challenges, 10)
     save_weekly_challenges(weekly_challenges)
