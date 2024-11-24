@@ -1,10 +1,11 @@
-import asyncio
 import discord
 import json
 import os
 import random
 from datetime import datetime
 from dotenv import load_dotenv
+from threading import Thread
+from flask import Flask
 
 # Charger et sauvegarder les scores
 def load_scores():
@@ -326,5 +327,24 @@ def main():
     
     client.run(os.getenv('DISCORD_TOKEN'))
 
+# Thread function to start Bot in a separate thread than the flask app
+def flask_thread(func):
+    thread = Thread(target=func)
+    print('Start Separate Thread from Bot')
+    thread.start()
+
+
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
+def run():
+    app.run(host='0.0.0.0', port=80, use_reloader=False)
+
+
 if __name__ == '__main__':
+    flask_thread(func=run)
     main()
