@@ -20,5 +20,5 @@ jobs:
       - name: Deploy to Fly
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        run: flyctl deploy --remote-only --ha=false --vm-memory=256 --vm-cpu-kind=shared --vm-cpus=1
+        run: flyctl deploy --remote-only --vm-memory=256 --vm-cpu-kind=shared --vm-cpus=1 --ha=false
 
