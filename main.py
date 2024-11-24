@@ -342,7 +342,7 @@ def hello_world():
     return 'Hello, World!'
 
 def run():
-    app.run(host='0.0.0.0', port=80, use_reloader=False)
+    app.run(host='0.0.0.0', port=8080, use_reloader=False)
 
 
 if __name__ == '__main__':
