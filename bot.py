@@ -201,6 +201,7 @@ def startBot(discord_token):
         # Commande : Changer les défis
         elif message.content == "!changerdefis":
             if "mod" in [role.name.lower() for role in message.author.roles]:
+                challenges = load_challenges()
                 weekly_challenges.clear()
                 weekly_challenges.extend(random.sample(challenges, 10))
                 save_weekly_challenges(weekly_challenges)
