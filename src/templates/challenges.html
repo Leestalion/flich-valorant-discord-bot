@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valorant Challenges</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/challenges.css') }}"> <!-- Add challenges.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        Valorant Challenges
+    </header>
+
+    <!-- Display challenges -->
+     <div class="challenges-container">
+        <ul class="challenges-list">
+            {% for challenge in challenges %}
+                <li class="challenge-item">
+                    <span class="challenge-text">{{ challenge.title }}</span>
+                    <form action="{{ url_for('challenges.remove_challenge', challenge_id=challenge.id) }}" method="POST" style="display: inline;" class="remove-form">
+                        <button type="submit" class="remove-btn"><i class="fas fa-trash-alt"></i></button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+     </div>
+
+
+    <!-- Add new challenge -->
+    <form action="{{ url_for('challenges.add_challenge') }}" method="POST" class="add-form">
+        <input type="text" name="title" placeholder="Challenge title" required>
+        <button type="submit" class="add-challenge-btn">Add</button>
+    </form>
+</body>
+</html>

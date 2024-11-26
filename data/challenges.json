@@ -1,0 +1,190 @@
+[
+    {
+        "id": 1,
+        "title": "Gagner une partie avec 25 kills minimum sur 3 parties diff\u00e9rentes."
+    },
+    {
+        "id": 2,
+        "title": "Gagner une partie avec au moins 35 kills sur une seule map."
+    },
+    {
+        "id": 3,
+        "title": "Gagner une partie o\u00f9 chaque membre de l'\u00e9quipe a au moins 10 kills."
+    },
+    {
+        "id": 4,
+        "title": "Gagner 3 parties cons\u00e9cutives en \u00e9tant MVP."
+    },
+    {
+        "id": 5,
+        "title": "Gagner une partie avec 20 kills minimum."
+    },
+    {
+        "id": 6,
+        "title": "Gagner une partie avec au moins 15 kills sur chaque map jou\u00e9e dans la semaine."
+    },
+    {
+        "id": 7,
+        "title": "R\u00e9aliser au total 150 kills dans l'historique de partie."
+    },
+    {
+        "id": 8,
+        "title": "Gagner une partie avec 30 kills minimum."
+    },
+    {
+        "id": 9,
+        "title": "Gagner une partie avec un K/D sup\u00e9rieur \u00e0 3 dans 3 parties diff\u00e9rentes."
+    },
+    {
+        "id": 10,
+        "title": "Gagner une partie avec un K/D sup\u00e9rieur \u00e0 4 sur une map sp\u00e9cifique (par exemple, Haven)."
+    },
+    {
+        "id": 11,
+        "title": "Gagner une partie avec un K/D de moins de 1."
+    },
+    {
+        "id": 12,
+        "title": "Gagner 5 parties avec un K/D sup\u00e9rieur \u00e0 2."
+    },
+    {
+        "id": 13,
+        "title": "R\u00e9ussir 2 games cons\u00e9cutives avec un K/D sup\u00e9rieur \u00e0 2.0."
+    },
+    {
+        "id": 14,
+        "title": "Gagner une partie avec un pourcentage de headshot sup\u00e9rieur \u00e0 40%."
+    },
+    {
+        "id": 15,
+        "title": "Gagner une partie en r\u00e9alisant au moins 50% de headshots dans une manche."
+    },
+    {
+        "id": 16,
+        "title": "Gagner une partie en r\u00e9alisant 15 assists minimum."
+    },
+    {
+        "id": 17,
+        "title": "R\u00e9aliser au moins 80 assists dans l'historique de partie."
+    },
+    {
+        "id": 18,
+        "title": "R\u00e9ussir 5 assists en une seule manche et gagner la partie."
+    },
+    {
+        "id": 19,
+        "title": "Avoir 15 assists ou plus sur 3 parties gagn\u00e9es diff\u00e9rentes."
+    },
+    {
+        "id": 20,
+        "title": "Gagner une partie en ayant le plus grand nombre d'assists parmi les deux \u00e9quipes."
+    },
+    {
+        "id": 21,
+        "title": "Gagner une partie avec un \u00e9cart de 10 rounds ou plus."
+    },
+    {
+        "id": 22,
+        "title": "Gagner une partie avec un score exact de 13-11."
+    },
+    {
+        "id": 23,
+        "title": "Gagner une partie avec 0 rounds perdus en attaque."
+    },
+    {
+        "id": 24,
+        "title": "Gagner une partie en \u00e9tant men\u00e9 9-3, puis remonter pour gagner."
+    },
+    {
+        "id": 25,
+        "title": "Gagner une partie avec 6 manches cons\u00e9cutives sans perdre un round."
+    },
+    {
+        "id": 26,
+        "title": "Gagner 2 parties cons\u00e9cutives avec au moins 10 rounds d'\u00e9cart."
+    },
+    {
+        "id": 27,
+        "title": "Gagner une partie sur chaque map au moins une fois."
+    },
+    {
+        "id": 28,
+        "title": "Gagner une partie avec 4 agents dans l'historique."
+    },
+    {
+        "id": 29,
+        "title": "Gagner une partie en jouant un agent Initiateur avec au moins 10 assists."
+    },
+    {
+        "id": 30,
+        "title": "Gagner une partie en jouant un agent Dueliste avec 20 kills."
+    },
+    {
+        "id": 31,
+        "title": "Gagner une partie avec Sage en r\u00e9alisant au moins 3 r\u00e9surrections."
+    },
+    {
+        "id": 32,
+        "title": "Gagner une partie avec Killjoy en obtenant au moins 2 kills gr\u00e2ce \u00e0 ses molly."
+    },
+    {
+        "id": 33,
+        "title": "Gagner une partie avec Raze et r\u00e9aliser un double kill avec son ultime."
+    },
+    {
+        "id": 34,
+        "title": "Gagner une partie avec Brimstone et obtenir au moins 2 kills avec ses grenades incendiaires."
+    },
+    {
+        "id": 35,
+        "title": "Gagner une partie avec Sova en r\u00e9alisant au moins 5 kills \u00e0 travers des murs."
+    },
+    {
+        "id": 36,
+        "title": "Gagner une partie avec Jett en r\u00e9alisant au moins 5 kills avec son ultime."
+    },
+    {
+        "id": 37,
+        "title": "Gagner une partie avec Cypher en r\u00e9alisant au moins 5 kills \u00e0 travers des smokes."
+    },
+    {
+        "id": 38,
+        "title": "Gagner une partie o\u00f9 chaque membre de l'\u00e9quipe r\u00e9alise au moins 10 kills."
+    },
+    {
+        "id": 39,
+        "title": "Gagner une partie o\u00f9 l'\u00e9quipe enti\u00e8re ne perd aucun round en d\u00e9fense."
+    },
+    {
+        "id": 40,
+        "title": "Gagner une partie avec au moins 2 kills par round sur 5 rounds cons\u00e9cutifs."
+    },
+    {
+        "id": 41,
+        "title": "Gagner 3 parties cons\u00e9cutives."
+    },
+    {
+        "id": 42,
+        "title": "Gagner 5 parties cons\u00e9cutives."
+    },
+    {
+        "id": 43,
+        "title": "Gagner 7 parties cons\u00e9cutives."
+    },
+    {
+        "id": 44,
+        "title": "Gagner un partie en faisant un ACE."
+    },
+    {
+        "id": 45,
+        "title": "Gagner une partie o\u00f9 vous r\u00e9alisez 2 clutch cons\u00e9cutifs."
+    },
+    {
+        "id": 46,
+        "title": "Gagner une partie apr\u00e8s avoir perdu tous les pistol rounds."
+    },
+    {
+        "id": 47,
+        "title": "Gagner une partie en ayant particip\u00e9 \u00e0 50% des kills ou assists de l\u2019\u00e9quipe."
+    }
+]
