@@ -1,37 +1,51 @@
 /* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    background-color: #0f1923;
+    background-color: #0F0019;
     color: #ece8e1;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Franklin Gothic Heavy', 'roboto', sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    line-height: 1.5;
 }
 
-header.header {
-    width: 100%;
-    background-color: #ff4655;
-    padding: 20px 0;
+.header {
     text-align: center;
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(45deg, #03AA5B 0%, #C984F0 100%);
+    padding: 2rem 1rem;
+    text-align: center;
+    border-bottom: 3px solid #1E1E2F;
+    width: 100%;
+}
+
+.header-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.header-logo {
+    max-width: 100px;
+    height: auto;
 }
 
 .challenges-container {
-    width: 90%;
-    max-width: 800px;
-    margin: 20px 0;
+    padding: 2rem;
+    text-align: center;
 }
 
 /* Challenge List Styles */
 .challenges-list {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
     border: 1px solid #2c2f36;
     border-radius: 8px;
     background-color: #1a2027;
@@ -75,41 +89,42 @@ header.header {
 }
 
 /* Add Challenge Form */
-.add-form {
+.add-challenge-form {
+    margin-bottom: 2rem;
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    gap: 10px;
+    gap: 1rem;
 }
 
-.add-form input[type="text"] {
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #2c2f36;
-    background-color: #1a2027;
-    color: #ece8e1;
+.challenge-input {
+    font-family: inherit;
+    padding: 0.5rem;
     font-size: 1rem;
-    outline: none;
-    width: 70%;
+    border: 2px solid #2c2f36;
+    border-radius: 4px;
+    background-color: #1a2027;
+    color: white;
+    width: 300px;
 }
 
-.add-form input[type="text"]::placeholder {
+.challenge-input::placeholder {
     color: #7a7d85;
 }
 
-.add-challenge-btn {
+.add-btn {
+    font-family: inherit;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
     background-color: #ff4655;
-    color: #fff;
+    color: white;
     border: none;
     border-radius: 4px;
-    padding: 10px 20px;
-    font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: bacground-color 0.3s ease-in-out;
 }
 
-.add-challenge-btn:hover {
+.add-btn:hover {
     background-color: #d63a4a;
 }
 
@@ -124,7 +139,7 @@ header.header {
         margin-bottom: 10px;
     }
 
-    .add-form input[type="text"] {
+    .challenge-input {
         width: 100%;
     }
 }
